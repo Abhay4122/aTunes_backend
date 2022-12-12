@@ -1,0 +1,4 @@
+To setup the consumer api project follow the given process
+
+1. install fastapi[all] package
+2. run the command --> uvicorn main:app --port 8800 --reload
