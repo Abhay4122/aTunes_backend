@@ -16,6 +16,7 @@ services:
         #     - aTunes
         env_file:
             - ./.envs/_api.env
+            - ./.envs/_db.env
         depends_on:
             - db
 

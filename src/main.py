@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
 from routers import songs_data
+from config import cursor, engine
+import models
+
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -16,7 +19,13 @@ app.add_middleware(
 
 @app.get('/')
 def index():
-  return {'Name': 'Abhay singh'}
+  query = '''
+      select * from song_details;
+  '''
+
+  data = cursor(query)
+  
+  return data
 
 
 app.include_router(songs_data.router)

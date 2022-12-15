@@ -1,16 +1,25 @@
-import boto
+import boto3, psycopg2, time, os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 
+HOST = 'db'
+USER = os.environ.get('POSTGRES_USER')
+PASSWORD = os.environ.get('POSTGRES_PASSWORD')
+DB = os.environ.get('POSTGRES_DB')
+
+
 def get_s3_client():
-    conn = boto.connect_s3('AKIARUYJYFCS6I7UCPMD', '4rnhTe7GalZABQrrxj001rMcypffVcl8E/ieIGNJ')
-    bucket = conn.get_bucket('gpsurvey')
+    conn = boto3.resource(
+        's3', aws_access_key_id = os.environ.get('ACCESS_KEY'),
+        aws_secret_access_key = os.environ.get('SECRET_KEY'),
+        region_name = os.environ.get('REGION')
+    )
 
-    return bucket
+    return 'bucket'
 
-engine = create_engine('postgresql+psycopg2://ssh_script:Zxcvbnmm032241@django.db.backends.postgresql_psycopg2/db_office')
+engine = create_engine(f'postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}/{DB}')
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -22,3 +31,24 @@ def get_db():
         yield db
     finally:
         db.close()
+
+def cursor(query):
+    con = psycopg2.connect(
+        host=HOST,
+        user=USER,
+        password=PASSWORD,
+        database=DB
+    )
+
+    cursor = con.cursor()
+
+    try:
+        cursor.execute(query)
+
+        return cursor.fetchall()
+    except Exception as e:
+        print('Connection to dtabase is failed.')
+        print(f'Error: {e}')
+        time.sleep(10)
+    finally:
+        cursor.close()
