@@ -5,33 +5,36 @@ version: '3.8'
 #         external: true
 
 services:
-    api:
-        build: src
-        command: uvicorn main:app --host 0.0.0.0 --reload
-        ports:
-            - 8088:8000
-        volumes:
-            - ./src:/app
-        # networks:
-        #     - aTunes
-        env_file:
-            - ./.envs/_api.env
-            - ./.envs/_db.env
-        depends_on:
-            - db
+  api:
+    build:
+      context: ./src
+      dockerfile: Dockerfile.local
+    image: 'atune_image_local'
+    command: uvicorn main:app --host 0.0.0.0 --reload
+    ports:
+      - 8088:8000
+    volumes:
+      - ./src:/app
+    # networks:
+    #     - aTunes
+    env_file:
+      - ./.envs/_api.env
+      - ./.envs/_db.env
+    depends_on:
+      - db
 
-    db:
-        image: postgres
-        # networks:
-        #     - aTunes
-        env_file:
-            - ./.envs/_db.env
+  db:
+    image: postgres
+    # networks:
+    #     - aTunes
+    env_file:
+      - ./.envs/_db.env
 
-    redis:
-        image: 'redis:alpine'
-        # networks:
-        #     - aTunes
-        env_file:
-            - ./.envs/_redis.env
-        depends_on:
-            - db
+  redis:
+    image: 'redis:alpine'
+    # networks:
+    #     - aTunes
+    env_file:
+      - ./.envs/_redis.env
+    depends_on:
+      - db
