@@ -1,18 +1,43 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Python: FastAPI",
-      "type": "python",
-      "request": "launch",
-      "cwd": "${workspaceFolder}/src",
-      "module": "uvicorn",
-      "args": ["main:app", "--host", "0.0.0.0", "--port", "8888", "--reload"],
-      "jinja": true,
-      "justMyCode": true
-    }
-  ]
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+
+    // Normal debug
+
+    // "version": "0.2.0",
+    // "configurations": [
+    //     {
+    //         "name": "Python: FastAPI",
+    //         "type": "python",
+    //         "request": "launch",
+    //         "cwd": "${workspaceFolder}/src",
+    //         "module": "uvicorn",
+    //         "args": ["main:app", "--host", "0.0.0.0", "--port", "8888", "--reload"],
+    //         "jinja": true,
+    //         "justMyCode": true
+    //     }
+    // ]
+
+    // Debug in docker
+
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Remote Attach",
+            "type": "python",
+            "request": "attach",
+            "connect": {
+                "host": "0.0.0.0",
+                "port": 5678
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/src",
+                    "remoteRoot": "/app"
+                }
+            ],
+            "justMyCode": true
+        }
+    ]
 }
