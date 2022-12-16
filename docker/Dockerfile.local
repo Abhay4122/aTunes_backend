@@ -1,0 +1,11 @@
+ARG PYTHON_VERSION
+
+FROM $PYTHON_VERSION
+
+WORKDIR /app
+
+COPY ./src/requirements.txt /app/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
+
+# COPY . /app
