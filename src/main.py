@@ -23,6 +23,8 @@ def index():
       select * from song_details;
   '''
 
+  print('Hello')
+
   data = cursor(query)
   
   return data
