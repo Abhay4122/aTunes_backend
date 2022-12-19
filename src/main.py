@@ -19,13 +19,12 @@ app.add_middleware(
 
 @app.get('/')
 def index():
-  query = '''
-      select * from song_details;
-  '''
+  # query = '''
+  #     select * from song_details;
+  # '''
 
-  print('Hello')
-
-  data = cursor(query)
+  # data = cursor(query)
+  data = {}
   
   return data
 
