@@ -1,0 +1,12 @@
+@hostname = http://127.0.0.1
+@port = 8088
+@host = {{hostname}}:{{port}}
+@baseUrl = {{host}}
+@contentType = application/json
+
+
+### Get filterd songs
+GET {{baseUrl}}/songs-data?_id=b63666e4-70d0-492c-8e3e-10cdf4784a33
+
+### Get song url
+GET {{baseUrl}}/play-song?_id=b63666e4-70d0-492c-8e3e-10cdf4784a33

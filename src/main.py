@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import songs_data
+from routers import songs_data, play_song
 from config import cursor, engine
 import models
 
 models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(redoc_url=None)
 
 origins = ['*']
 app.add_middleware(
@@ -30,3 +30,4 @@ def index():
 
 
 app.include_router(songs_data.router)
+app.include_router(play_song.router)

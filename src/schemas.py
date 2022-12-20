@@ -7,6 +7,16 @@ class GetSongsList(BaseModel):
     id: UUID
     title: str
     movie_name: Optional[str] = None
+    year: Optional[str] = None
+    tag_line: Optional[str] = None
+    release_date: Optional[str] = None
+    cast: Optional[str] = None
+    title: Optional[str] = None
+    director: Optional[str] = None
+    genre: Optional[str] = None
+    rating: Optional[str] = None
+    writer: Optional[str] = None
+    movie_folder: Optional[str] = None
 
     class Config:
         orm_mode = True
