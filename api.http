@@ -5,8 +5,14 @@
 @contentType = application/json
 
 
-### Get filterd songs
-GET {{baseUrl}}/songs-data?_id=b63666e4-70d0-492c-8e3e-10cdf4784a33
+### Get All
+GET {{baseUrl}}/songs-data
+
+### Get Songs for paginaltion
+GET {{baseUrl}}/songs-data?_page=5
+
+### Get Individual song
+GET {{baseUrl}}/songs-data?_id=830fb77c-cef6-43f8-bd59-507155b0bcac
 
 ### Get song url
-GET {{baseUrl}}/play-song?_id=b63666e4-70d0-492c-8e3e-10cdf4784a33
+GET {{baseUrl}}/play-song?_id=830fb77c-cef6-43f8-bd59-507155b0bcac
