@@ -13,6 +13,7 @@ class SongDetails(Base):
         unique=True
     )
     movie_name = Column(String(200), nullable=False)
+    movie_img = Column(String(250), nullable=False)
     title = Column(String(200), nullable=False)
     year = Column(String(5), nullable=True)
     tag_line = Column(String(250), nullable=True)

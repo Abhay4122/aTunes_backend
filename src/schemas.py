@@ -7,6 +7,7 @@ class GetSongsList(BaseModel):
     id: UUID
     title: str
     movie_name: Optional[str] = None
+    movie_img: Optional[str] = None
     year: Optional[str] = None
     tag_line: Optional[str] = None
     release_date: Optional[str] = None

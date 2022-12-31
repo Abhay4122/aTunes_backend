@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import songs_data, play_song
+from routers import songs_data, play_song, search_song
 from config import cursor, engine
 import models
 
@@ -31,3 +31,4 @@ def index():
 
 app.include_router(songs_data.router)
 app.include_router(play_song.router)
+app.include_router(search_song.router)
