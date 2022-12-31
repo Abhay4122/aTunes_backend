@@ -1,0 +1,52 @@
+version: '3.8'
+
+# networks:
+#     aTunes:
+#         external: true
+
+volumes:
+    psql_data: {}
+    psql_data_backup: {}
+    redis_data: {}
+
+services:
+    api:
+        build:
+            context: .
+            dockerfile: ./docker/Dockerfile.production
+            args:
+                - PYTHON_VERSION=${PYTHON_VERSION}
+        image: 'atune_image_production'
+        command: uvicorn main:app --host 0.0.0.0 --reload
+        ports:
+            - 8088:8000
+        volumes:
+            - ./src:/app
+        # networks:
+        #     - aTunes
+        env_file:
+            - ./.envs/_api.env
+            - ./.envs/_db.env
+        depends_on:
+            - db
+
+    db:
+        image: ${DB_IMAGE}
+        # networks:
+        #     - aTunes
+        env_file:
+            - ./.envs/_db.env
+        volumes:
+            - psql_data:/var/lib/postgresql/data:Z
+            - psql_data_backup:/backups:z
+
+    redis:
+        image: ${REDIS_IMAGE}
+        # networks:
+        #     - aTunes
+        env_file:
+            - ./.envs/_redis.env
+        depends_on:
+            - db
+        volumes:
+            - redis_data:/data

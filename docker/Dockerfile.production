@@ -1,0 +1,16 @@
+ARG PYTHON_VERSION
+
+# FROM $PYTHON_VERSION as base
+FROM $PYTHON_VERSION
+
+# RUN pip install pytz
+
+WORKDIR /app
+
+COPY ./src/requirements.txt /app/requirements.txt
+
+RUN python -m pip install --upgrade pip
+
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
+
+COPY . /app
