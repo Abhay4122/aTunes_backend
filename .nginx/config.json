@@ -1,0 +1,15 @@
+{
+    "listeners": {
+        "*:80": {
+            "pass": "applications/aTunes_backend"
+        }
+    },
+    "applications": {
+        "aTunes_backend": {
+            "type": "pytohn 3.8",
+            "path": "/app/src/",
+            "module": "main",
+            "callable": "aTunes_app"
+        }
+    }
+}

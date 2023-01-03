@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 import models, json, utils, schemas
 
 
-router = APIRouter(prefix='/search-song', tags=['Songs data'])
+router = APIRouter(prefix='/search-song', tags=['Search songs'])
 
 @router.get('')
 def get_songs(_serch: str = '', db: Session = Depends(get_db)):

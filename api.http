@@ -15,10 +15,14 @@ GET {{baseUrl}}/songs-data?_page=90
 GET {{baseUrl}}/songs-data?_serch=dosti
 
 ### Get Songs by redis search
-GET {{baseUrl}}/search-song?_serch=dosti
+GET {{baseUrl}}/search-song?_serch=darling
 
 ### Get Individual song
 GET {{baseUrl}}/songs-data?_id=830fb77c-cef6-43f8-bd59-507155b0bcac
 
 ### Get song url
-GET {{baseUrl}}/play-song?_id=e02833d0-e5d1-4bc7-90ab-fa9ac7ba8d9d
+GET {{baseUrl}}/play-song?_id=0ca522b0-3cbf-4117-adf1-a4150a77ffc3
+
+
+### Test async feature in fastapi
+GET {{baseUrl}}/f-test

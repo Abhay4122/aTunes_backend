@@ -1,15 +1,22 @@
 version: '3.8'
 
-# networks:
-#     aTunes:
-#         external: true
-
 volumes:
     psql_data: {}
     psql_data_backup: {}
     redis_data: {}
 
 services:
+    web:
+        build:
+            context: .
+            dockerfile: ./.nginx/Dockerfile
+        image: nginx
+        ports:
+            - 80:80
+            - 443:443
+        depends_on:
+            - api
+
     api:
         build:
             context: .
@@ -19,11 +26,7 @@ services:
         image: 'atune_image_production'
         command: uvicorn main:app --host 0.0.0.0 --reload
         ports:
-            - 8088:8000
-        volumes:
-            - ./src:/app
-        # networks:
-        #     - aTunes
+            - 8080:8000
         env_file:
             - ./.envs/_api.env
             - ./.envs/_db.env
@@ -32,8 +35,6 @@ services:
 
     db:
         image: ${DB_IMAGE}
-        # networks:
-        #     - aTunes
         env_file:
             - ./.envs/_db.env
         volumes:
@@ -42,8 +43,6 @@ services:
 
     redis:
         image: ${REDIS_IMAGE}
-        # networks:
-        #     - aTunes
         env_file:
             - ./.envs/_redis.env
         depends_on:
