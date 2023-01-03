@@ -10,9 +10,8 @@ services:
         build:
             context: .
             dockerfile: ./.nginx/Dockerfile
-        image: nginx
         ports:
-            - 80:80
+            - 8080:80
             - 443:443
         depends_on:
             - api
@@ -23,7 +22,7 @@ services:
             dockerfile: ./docker/Dockerfile.production
             args:
                 - PYTHON_VERSION=${PYTHON_VERSION}
-        image: 'atune_image_production'
+        image: atune_image_production:latest
         command: uvicorn main:app --host 0.0.0.0 --reload
         ports:
             - 8080:8000
