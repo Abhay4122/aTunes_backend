@@ -12,6 +12,7 @@ def get_songs():
   """
     Return the List of universities for some random countries in sync way
   """
+  hel
   data: dict = {}
   data.update(get_all_universities_for_country("turkey"))
   data.update(get_all_universities_for_country("india"))
