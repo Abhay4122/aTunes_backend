@@ -14,9 +14,9 @@ services:
         #   context: .
         #   dockerfile: ./.nginx/Dockerfile
         volumes:
-            - ./.nginx/conf/:/etc/nginx/conf.d/:ro
-            - ./.nginx/certbot/www:/var/www/certbot/:ro
-            - ./.nginx/certbot/conf/:/etc/nginx/ssl/:ro
+            - ./.server/nginx/conf/:/etc/nginx/conf.d/:ro
+            - ./.server/certbot/www:/var/www/certbot/:ro
+            - ./.server/certbot/conf/:/etc/nginx/ssl/:ro
         ports:
             - 80:80
             - 443:443
@@ -46,8 +46,7 @@ services:
         env_file:
             - ./.envs/_db.env
         volumes:
-            - psql_data:/var/lib/postgresql/data:Z
-            - psql_data_backup:/backups:z
+            - psql_data:/var/lib/postgresql/data
 
     redis:
         image: ${REDIS_IMAGE}
@@ -63,5 +62,5 @@ services:
         image: certbot/certbot:latest
         container_name: bot
         volumes:
-            - ./.nginx/certbot/www/:/var/www/certbot/:rw
-            - ./.nginx/certbot/conf/:/etc/letsencrypt/:rw
+            - ./.server/certbot/www/:/var/www/certbot/:rw
+            - ./.server/certbot/conf/:/etc/letsencrypt/:rw

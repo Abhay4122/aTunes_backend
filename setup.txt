@@ -9,3 +9,52 @@ This project is dockerized for local development and production environment
 In the production environment there is two extra service (nginx and certbot) is added to host the project globaly
 
 to setup the nginx and certbot got refrence from https://mindsers.blog/post/https-using-nginx-certbot-docker/
+
+Run the command after finish docker compose
+docker compose -f production.yml run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ --dry-run -d atunes.cimsedu.com
+
+
+There is nginx.conf is like billow
+
+upstream api {
+    # fail_timeout=0 means we always retry an upstream even if it failed
+    # for a TCP configuration
+    server api:8000; # fail_timeout=1;
+}
+
+server {
+    # if no Host match, close the connection to prevent host spoofing
+    listen 80;
+    listen [::]:80;
+
+    server_name atunes.cimsedu.com www.atunes.cimsedu.com;
+    server_tokens off;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    location / {
+        return 301 https://atunes.cimsedu.com$request_uri;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+
+    location = /50x.html {
+        root /usr/share/nginx/html;
+    }
+}
+
+server {
+    listen 443 default_server ssl http2;
+    listen [::]:443 ssl http2;
+
+    server_name atunes.cimsedu.com www.atunes.cimsedu.com;
+
+    ssl_certificate /etc/nginx/ssl/live/atunes.cimsedu.com/fullchain.pem;
+    ssl_certificate_key /etc/nginx/ssl/live/atunes.cimsedu.com/privkey.pem;
+
+    location / {
+    	proxy_pass http://api;
+    }
+}
