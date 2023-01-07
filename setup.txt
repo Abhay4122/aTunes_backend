@@ -2,3 +2,10 @@ To setup the consumer api project follow the given process
 
 1. install fastapi[all] package
 2. run the command --> uvicorn main:app --port 8800 --reload
+
+
+This project is dockerized for local development and production environment
+
+In the production environment there is two extra service (nginx and certbot) is added to host the project globaly
+
+to setup the nginx and certbot got refrence from https://mindsers.blog/post/https-using-nginx-certbot-docker/
