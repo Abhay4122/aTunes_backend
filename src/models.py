@@ -12,6 +12,7 @@ class SongDetails(Base):
         default=uuid.uuid4,
         unique=True
     )
+    category_name = Column(String(100), nullable=False)
     movie_name = Column(String(200), nullable=False)
     movie_img = Column(String(250), nullable=False)
     title = Column(String(200), nullable=False)

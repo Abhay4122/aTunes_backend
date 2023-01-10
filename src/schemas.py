@@ -6,6 +6,7 @@ from uuid import UUID
 class GetSongsList(BaseModel):
     id: UUID
     title: str
+    category_name: Optional[str] = None
     movie_name: Optional[str] = None
     movie_img: Optional[str] = None
     year: Optional[str] = None

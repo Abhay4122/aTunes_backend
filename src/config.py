@@ -1,13 +1,16 @@
-import boto3, psycopg2, time, os
+import boto3, psycopg2, time, os, redis
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from pathlib import Path
 
 
 HOST = 'db'
 USER = os.environ.get('POSTGRES_USER')
 PASSWORD = os.environ.get('POSTGRES_PASSWORD')
 DB = os.environ.get('POSTGRES_DB')
+
+base_dir = Path(__file__).resolve().parent.parent
 
 
 def get_s3_client():
@@ -52,3 +55,7 @@ def cursor(query):
         time.sleep(10)
     finally:
         cursor.close()
+
+def redis_con(db=0):
+    r = redis.Redis(host='redis', db=db)
+    return r

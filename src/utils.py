@@ -1,7 +1,6 @@
 from typing import List
 
-import aiofiles
-import requests
+import aiofiles, requests
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from pydantic import parse_obj_as
