@@ -13,9 +13,9 @@ class SongDetails(Base):
         unique=True
     )
     category_name = Column(String(100), nullable=False)
-    movie_name = Column(String(200), nullable=False)
+    movie_name = Column(String(200), nullable=False, index=True)
     movie_img = Column(String(250), nullable=False)
-    title = Column(String(200), nullable=False)
+    title = Column(String(200), nullable=False, index=True)
     year = Column(String(5), nullable=True)
     tag_line = Column(String(250), nullable=True)
     release_date = Column(String(50), nullable=True)
@@ -25,3 +25,4 @@ class SongDetails(Base):
     rating = Column(String(15), nullable=True)
     writer = Column(String(100), nullable=True)
     movie_folder= Column(String(200), nullable=True)
+    movie_name_year = Column(String(200), nullable=False, index=True)

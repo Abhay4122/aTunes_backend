@@ -19,6 +19,7 @@ class GetSongsList(BaseModel):
     rating: Optional[str] = None
     writer: Optional[str] = None
     movie_folder: Optional[str] = None
+    movie_name_year: Optional[str] = None
 
     class Config:
         orm_mode = True
