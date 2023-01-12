@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, status
-from config import get_db, redis_search
+from config import get_db, redis_search, cursor
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
 import models, json, utils, schemas
@@ -18,8 +18,11 @@ def get_songs(_serch: str = '', db: Session = Depends(get_db)):
   songs_data = []
 
   if _serch:
+    # # ORM search
     # songs_data = db.query(modl).filter(or_(modl.title.ilike(f'%{_serch}%'), modl.movie_name.ilike(f'%{_serch}%'))).all()
-    raw_search = r_con.search(f'@title:{_serch}')
+
+    # Redisearch
+    raw_search = r_con.search(f'@body:{_serch}*')
 
     for i in raw_search.docs:
       songs_data.append(json.loads(i.body))

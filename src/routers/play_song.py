@@ -32,3 +32,20 @@ def get_songs(_id: str = '', db: Session = Depends(get_db)):
     )
     
     return utils.resp_format(obj, status.HTTP_200_OK)
+
+
+@router.get('/cache')
+def get_songs(_movie: str = '', _title: str = ''):
+    '''
+        URL (/play-song) is used to Play ondemand from redis caching
+    '''
+    obj = S3_CLIENT.generate_presigned_url(
+        'get_object',
+        Params={
+            'Bucket': environ.get('BUCKET'),
+            'Key': f'songs/{"".join(e for e in _movie if e.isalnum())}/{_title}.mp3'
+        },
+        ExpiresIn=600
+    )
+    
+    return utils.resp_format(obj, status.HTTP_200_OK)
