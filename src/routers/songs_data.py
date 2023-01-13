@@ -77,4 +77,10 @@ def sync_with_db(db, modl):
             print(e)
   
 def sync_with_redis(client, category, data):
-  client.redis.hset(f'all_song:{category}_{data["title"]}', mapping={'title': data['title'],'body': json.dumps(data)})
+  client.redis.hset(
+    f'all_song:{category}_{data["title"]}',
+    mapping={
+      'title': data['title'],
+      'body': json.dumps({'movie_name': data['movie_name'], 'title': data['title']})
+    }
+  )
