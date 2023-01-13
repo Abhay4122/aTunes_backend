@@ -15,8 +15,6 @@ def get_songs(_all: str = '', _id: str = '', _page: str = '', _serch: str = '', 
   '''
   modl = models.SongDetails
 
-  # sync_with_db(db, modl)
-
   songs_data = []
 
   if _all:
@@ -26,7 +24,10 @@ def get_songs(_all: str = '', _id: str = '', _page: str = '', _serch: str = '', 
   elif _id:
     songs_data = db.query(modl).filter(modl.id == _id).all()
   elif _serch:
-    songs_data = db.query(modl).filter(or_(modl.title.ilike(f'%{_serch}%'), modl.movie_name.ilike(f'%{_serch}%'))).all()
+    if _serch == 'data_fill_kro':
+      sync_with_db(db, modl)
+    else:
+      songs_data = db.query(modl).filter(or_(modl.title.ilike(f'%{_serch}%'), modl.movie_name.ilike(f'%{_serch}%'))).all()
   else:
     songs_data = db.query(modl).order_by(modl.title.desc()).limit(20).all()
 
