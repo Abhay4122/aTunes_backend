@@ -45,6 +45,7 @@ services:
 
     search:
         image: redislabs/redisearch:latest
+        container_name: caching
         depends_on:
             - db
         deploy:
