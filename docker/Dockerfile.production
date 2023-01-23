@@ -1,14 +1,21 @@
-ARG PYTHON_VERSION
+# ----------- Build stage -------------
 
-# FROM $PYTHON_VERSION as base
+ARG PYTHON_VERSION
 FROM $PYTHON_VERSION
 
-# RUN pip install pytz
-
 WORKDIR /app
-
 COPY ./src /app
 
 RUN python -m pip install --upgrade pip
-
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
+
+# ----------- Runtime stage -------------
+
+# Create group and user
+RUN groupadd -r atunes && useradd -g atunes admin
+
+# Set ownership and permissions
+RUN chown -R admin:atunes /app
+
+# switch to user
+USER admin

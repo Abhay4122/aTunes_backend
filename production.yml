@@ -7,7 +7,7 @@ volumes:
 
 services:
     server:
-        image: nginx:alpine
+        image: nginx:1.23.3-alpine-slim
         container_name: server
         restart: always
         volumes:
@@ -25,7 +25,7 @@ services:
             context: .
             dockerfile: ./docker/Dockerfile.production
             args:
-                - PYTHON_VERSION=tiangolo/uvicorn-gunicorn-fastapi:python3.8
+                - PYTHON_VERSION=tiangolo/uvicorn-gunicorn-fastapi:python3.8-slim
         image: atunes_backend:latest
         container_name: atb
         command: uvicorn main:app --host 0.0.0.0 --reload
@@ -36,7 +36,7 @@ services:
             - db
 
     db:
-        image: postgres:latest
+        image: postgres:15.1-alpine3.17
         container_name: db
         env_file:
             - ./.envs/_db.env
@@ -44,7 +44,7 @@ services:
             - psql_data:/var/lib/postgresql/data
 
     search:
-        image: redislabs/redisearch:latest
+        image: redislabs/redisearch:2.6.4
         container_name: caching
         depends_on:
             - db
@@ -56,7 +56,7 @@ services:
             - redis_data:/data
 
     certbot:
-        image: certbot/certbot:latest
+        image: certbot/certbot:v2.2.0
         container_name: bot
         volumes:
             - ./.server/certbot/www/:/var/www/certbot/:rw

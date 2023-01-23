@@ -22,7 +22,7 @@ def get_songs(_serch: str = '', db: Session = Depends(get_db)):
     # songs_data = db.query(modl).filter(or_(modl.title.ilike(f'%{_serch}%'), modl.movie_name.ilike(f'%{_serch}%'))).all()
 
     # Redisearch
-    raw_search = r_con.search(f'@body:{_serch}*')
+    raw_search = r_con.search(f'@body:{_serch.strip()}*')
 
     for i in raw_search.docs:
       songs_data.append(json.loads(i.body))

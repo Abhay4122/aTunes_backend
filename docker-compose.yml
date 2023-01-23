@@ -15,7 +15,7 @@ services:
             context: .
             dockerfile: ./docker/Dockerfile.local
             args:
-                - PYTHON_VERSION=${PYTHON_VERSION}
+                - PYTHON_VERSION=tiangolo/uvicorn-gunicorn-fastapi:python3.8-slim
         image: 'atune_image_local'
         command: ['sh', '-c', 'python -m debugpy --wait-for-client --listen 0.0.0.0:5678 -m uvicorn main:app --reload --host 0.0.0.0 --port 8000']
         ports:
@@ -32,7 +32,7 @@ services:
             - db
 
     db:
-        image: ${DB_IMAGE}
+        image: postgres:15.1-alpine3.17
         # networks:
         #     - aTunes
         env_file:
@@ -55,7 +55,7 @@ services:
     #     image: redislabs/rejson:latest
 
     search:
-        image: redislabs/redisearch:latest
+        image: redislabs/redisearch:2.6.4
         depends_on:
             - db
         deploy:
