@@ -1,7 +1,7 @@
 # ----------- Build stage -------------
 
 ARG PYTHON_VERSION
-FROM $PYTHON_VERSION
+FROM $PYTHON_VERSION as base
 
 WORKDIR /app
 COPY ./src /app
@@ -10,6 +10,15 @@ RUN python -m pip install --upgrade pip
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 # ----------- Runtime stage -------------
+
+# FROM python:alpine3.17
+
+# workdir /app
+
+# copy --from=base /app /app
+
+# RUN pip install -r /app/requirements.txt
+
 
 # Create group and user
 RUN groupadd -r atunes && useradd -g atunes admin
