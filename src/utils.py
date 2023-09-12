@@ -75,7 +75,7 @@ def resp_format(data, status, schema=''):
     }
 
     if schema:
-        if type(data) == list:
+        if type(data) is list:
             if len(data) > 0:
                 resp_data = parse_obj_as(List[schema], data)
             else:
