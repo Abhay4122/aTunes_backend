@@ -91,24 +91,3 @@ def resp_format(data, status, schema=''):
     response_data['responseCode'] = status
 
     return JSONResponse(response_data, status_code=status)
-
-def get_hes_client_after_signing_in(username, password, use_prod_url=True):
-    if use_prod_url:
-        url = 'https://data.grampower.com/hes/'
-    else:
-        url = 'https://staging.grampower.com/hes/'
-
-    request_client = requests.session()
-    response = request_client.post(
-        url,
-        data={
-            'username': username,
-            'password': password
-        }, verify=False
-    )
-    headers = {
-        'X-CSRFToken': response.cookies['csrftoken'],
-        'Referer': url
-    }
-
-    return request_client, headers
